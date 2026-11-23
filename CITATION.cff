@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the companion manuscript and software archive."
+type: software
+title: "Lattice Trapezoids of Prime Gaps: Lean 4 Formalization and Numerical Reproduction"
+authors:
+  - family-names: "Gonzalez Castillo"
+    given-names: "Rafael A."
+version: "1.0.0"
+date-released: "2026-11-22"
+repository-code: "https://github.com/Bronxproject/lattice-trapezoids-prime-gaps"
+license: MIT

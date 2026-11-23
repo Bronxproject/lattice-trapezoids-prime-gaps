@@ -1,0 +1,16 @@
+# Lean build artifacts
+.lake/
+build/
+
+# Python bytecode and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+
+# Generated results and resumable checkpoints
+*.pkl
+prime_gap_stats_results.json
+*.tmp
+
+# OS and editor files
+.DS_Store

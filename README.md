@@ -1,5 +1,7 @@
 # Lattice Trapezoids of Prime Gaps
 
+[![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24451767.svg)](https://doi.org/10.5281/zenodo.24451767)
+
 **Companion source archive for:** Rafael A. Gonzalez Castillo, *Lattice Trapezoids of Prime Gaps: Minimal Interior Counts and Empirical Statistics* (November 2026 manuscript).
 
 This repository contains a Lean 4 / Mathlib formalization of finite algebraic and lattice-point statements, together with Python programs for reproducing the manuscript's numerical experiments. It is an archive of the code, not a claim to have formally proved the paper's asymptotic estimates or its empirical observations.
@@ -62,8 +64,14 @@ python prime_gap_stats.py --limit 100000 --ratio 1.1 --ckpt smoke_ckpt.pkl --out
 
 For the manuscript's sensitivity checks, use `--ratio 1.05` or `--ratio 1.2`, each with a distinct `--ckpt` and `--out` path. The defaults are 200 bootstrap blocks, 1,000 resamples, and seed 12345. A run saves a pickle checkpoint so it can resume; **only load checkpoints you created yourself**, since Python pickle files can execute code when loaded. Checkpoints (`*.pkl`) and the default generated results file are intentionally excluded from version control. The JSON output includes its prime limit, window ratio, bootstrap settings, interval shifts, and both fit families when sufficiently many intervals are available.
 
-The provided scripts have been reviewed for syntax, and the program for Tables 1–2 has been checked against the manuscript values. The full 30-billion-limit numerical run and the Lean build should be rerun in an appropriate environment before citing the software as independently reproduced.
+The Python scripts are checked with fast deterministic tests in `tests/` and GitHub Actions. The program for Tables 1–2 has also been checked against the manuscript values. The full 30-billion-limit numerical run and the Lean build should be rerun in an appropriate environment before describing the complete computation as independently reproduced.
+
+## Automated verification
+
+GitHub Actions runs Python unit tests and a small end-to-end statistics check, and attempts to build every included Lean module against the pinned Mathlib version. A passing small test is **not** a substitute for executing the full numerical experiments. See the [verification workflow](.github/workflows/verify.yml) for the exact commands.
 
 ## Citation and license
 
-See [`CITATION.cff`](CITATION.cff) for citation metadata. Software is distributed under the [MIT License](LICENSE), copyright 2026 Rafael A. Gonzalez Castillo. Update the citation with the final arXiv identifier and Zenodo DOI when those records are assigned.
+The software release **v1.0.0** is permanently archived at [Zenodo DOI: 10.5281/zenodo.24451767](https://doi.org/10.5281/zenodo.24451767). Please cite that DOI when referencing the archived release. Later commits on `main` improve documentation and checks but **do not modify** the already-archived `v1.0.0` snapshot.
+
+See [`CITATION.cff`](CITATION.cff) for citation metadata. Software is distributed under the [MIT License](LICENSE), copyright 2026 Rafael A. Gonzalez Castillo. When the manuscript has an arXiv identifier, update the manuscript citation separately.

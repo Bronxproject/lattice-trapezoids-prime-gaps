@@ -1,0 +1,50 @@
+name: Verify Lean and Python
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python reproduction smoke tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compile Python scripts
+        run: python -m py_compile reproduce_tables.py prime_gap_stats.py
+      - name: Run deterministic tests
+        run: python -m unittest discover -s tests -v
+      - name: Run a small end-to-end statistics check
+        run: |
+          python prime_gap_stats.py --limit 100000 --ratio 1.1 --ckpt smoke_ckpt.pkl --out smoke_results.json
+          python -c 'import json; r=json.load(open("smoke_results.json")); assert r["prime_count"] == 9592; assert r["anchor_count"] == 9588'
+
+  lean:
+    name: Build Lean 4 formalization
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: true
+          test: false
+          lint: false
+          use-mathlib-cache: true
+          build-args: >-
+            PrimeGaps PrimeGaps.Verification PrimeGapsTheorem3
+            PrimeTrapezoidPick PrimeGaps.TrapezoidAxiomChecks
